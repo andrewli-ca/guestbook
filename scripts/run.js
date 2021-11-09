@@ -1,4 +1,6 @@
 const main = async () => {
+  const [owner, randomPerson] = await hre.ethers.getSigners();
+
   // Compiles the contract and generates artifacts.
   const waveContractFactory = await hre.ethers.getContractFactory('WavePortal');
 
@@ -8,22 +10,33 @@ const main = async () => {
   // accept the deployment. In this context, we are mining our own contract.
   const waveContract = await waveContractFactory.deploy();
 
-  // Waits for the contract to be deployed to our local blockchain (when miners
-  // are done mining). Once deployed, the contract constructor will run.
+  // Waits for the contract to be deployed to our local blockchain. Once
+  // deployed (when miners are done mining), the contract constructor will run.
   await waveContract.deployed();
 
-  // The address of the deployed contract on the blockchain.
-  console.log("Contract deployed to:", waveContract.address);
-}
+  console.log('Contract deployed to:', waveContract.address);
+  console.log('Contract deployed by:', owner.address);
+
+  let waveCount;
+  waveCount = await waveContract.getTotalWaves();
+
+  // This is a request to the blockchain.
+  let waveTxn = await waveContract.wave();
+
+  // Wait for miners to finish mining the transaction.
+  await waveTxn.wait();
+
+  waveCount = await waveContract.getTotalWaves();
+};
 
 const runMain = async () => {
   try {
     await main();
     process.exit(0);
-  } catch(error) {
+  } catch (error) {
     console.log(error);
     process.exit(1);
   }
-}
+};
 
 runMain();

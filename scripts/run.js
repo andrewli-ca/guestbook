@@ -18,7 +18,7 @@ const main = async () => {
   console.log('Contract deployed by:', owner.address);
 
   let waveCount;
-  waveCount = await waveContract.getTotalWaves();
+  waveCount = await waveContract.getTotalWaves(owner.address);
 
   // This is a request to the blockchain.
   let waveTxn = await waveContract.wave();
@@ -26,12 +26,12 @@ const main = async () => {
   // Wait for miners to finish mining the transaction.
   await waveTxn.wait();
 
-  waveCount = await waveContract.getTotalWaves();
+  waveCount = await waveContract.getTotalWaves(owner.address);
 
-  waveTxn = await waveContract.connect(randomPerson).wave();
+  // Wave again
+  waveTxn = await waveContract.wave();
   await waveTxn.wait();
-
-  waveCount = await waveContract.getTotalWaves();
+  waveCount = await waveContract.getTotalWaves(owner.address);
 };
 
 const runMain = async () => {

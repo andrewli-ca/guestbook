@@ -1,6 +1,4 @@
 const main = async () => {
-  const [owner, randomPerson] = await hre.ethers.getSigners();
-
   // Compiles the contract and generates artifacts.
   const waveContractFactory = await hre.ethers.getContractFactory('WavePortal');
 
@@ -15,23 +13,17 @@ const main = async () => {
   await waveContract.deployed();
 
   console.log('Contract deployed to:', waveContract.address);
-  console.log('Contract deployed by:', owner.address);
-
-  let waveCount;
-  waveCount = await waveContract.getTotalWaves(owner.address);
 
   // This is a request to the blockchain.
-  let waveTxn = await waveContract.wave();
+  let waveTxn = await waveContract.wave('A message!');
+  await waveTxn.wait(); // Wait for the transaction to be mined
 
-  // Wait for miners to finish mining the transaction.
-  await waveTxn.wait();
+  const [_, randomPerson] = await hre.ethers.getSigners();
+  waveTxn = await waveContract.connect(randomPerson).wave('Another message!');
+  await waveTxn.wait(); // Wait for the transaction to be mined
 
-  waveCount = await waveContract.getTotalWaves(owner.address);
-
-  // Wave again
-  waveTxn = await waveContract.wave();
-  await waveTxn.wait();
-  waveCount = await waveContract.getTotalWaves(owner.address);
+  let allWaves = await waveContract.getAllWaves();
+  console.log(allWaves);
 };
 
 const runMain = async () => {

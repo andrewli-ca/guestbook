@@ -46,4 +46,8 @@
 	.grid {
 		width: 100%;
 	}
+
+	.card {
+		min-width: 90%;
+	}
 }

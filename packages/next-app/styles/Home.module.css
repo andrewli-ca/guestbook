@@ -50,7 +50,7 @@
 
 .description {
 	line-height: 1.5;
-	font-size: 1.5rem;
+	font-size: 1.35rem;
 }
 
 .formWrapper {
@@ -67,5 +67,27 @@
 @media (max-width: 600px) {
 	.container {
 		padding: 0;
+	}
+
+	.main {
+		padding: 2rem 0;
+	}
+
+	.header {
+		max-width: 300px;
+		margin: 0 auto;
+		padding: 1rem 0;
+	}
+
+	.title {
+		font-size: 3.125rem;
+	}
+
+	.formWrapper {
+		margin: 3rem 0;
+	}
+
+	.description {
+		font-size: 1.375rem;
 	}
 }

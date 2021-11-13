@@ -55,7 +55,9 @@ export default function Home() {
 
 			<main className={styles.main}>
 				<div className={styles.header}>
-					<span className={styles.logo}>📕 </span>
+					<span className={styles.logo} aria-label="red book emoji">
+						📕
+					</span>
 					<h1 className={styles.title}>
 						<a href={TWITTER_URL} target="_blank" rel="noopener noreferrer">
 							andrew's
@@ -76,7 +78,8 @@ export default function Home() {
 
 				<div className={styles.formWrapper}>
 					<p className={styles.description}>
-						Leave a message for a chance to win free ETH!
+						Leave a message, win free ETH!{' '}
+						<span aria-label="smiling with sunglasses emoji">😎</span>{' '}
 					</p>
 
 					{currentAccount ? (

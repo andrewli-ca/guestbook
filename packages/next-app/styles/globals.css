@@ -1,12 +1,14 @@
-html,
-body {
-	background: #011627;
-	color: #fff;
-	padding: 16px;
+html {
 	margin: 0;
 	font-family: 'Roboto Mono', monospace;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	background: #011627;
+	color: #fff;
+	padding: 16px;
 }
 
 a {
@@ -32,4 +34,11 @@ button {
 
 button:hover {
 	background-color: #f9ff8b;
+}
+
+textarea {
+	height: 140px;
+	padding: 8px;
+	font-size: 18px;
+	font-family: 'Roboto Mono', monospace;
 }

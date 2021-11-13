@@ -1,7 +1,15 @@
-import { format, parseISO } from 'date-fns';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import { Button } from '../components/Button';
+import { MessageGrid, MessageGridItem } from '../components/MessageGrid';
+import { Textarea } from '../components/Textarea';
 import styles from '../styles/Home.module.css';
+import { useWallet } from '../utils/wallet';
+import { format, parseISO } from 'date-fns';
+
+const TWITTER_URL = 'https://twitter.com/andrewli_ca';
+const ETHERSCAN_BASE_URL = 'https://rinkeby.etherscan.io/address';
+const CONTRACT_ADDRESS = '0x757E343598015cB7265eC8416f6F31FbD8932105';
 
 const data = [
 	{
@@ -28,6 +36,15 @@ const data = [
 ];
 
 export default function Home() {
+	const { currentAccount, checkIfWalletIsConnected, connectWallet } =
+		useWallet();
+
+	const [messageInput, setMessageInput] = useState('');
+
+	useEffect(() => {
+		checkIfWalletIsConnected();
+	}, []);
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -37,14 +54,10 @@ export default function Home() {
 			</Head>
 
 			<main className={styles.main}>
-				<div className={styles.titleWrapper}>
-					<span className={styles.titleLogo}>📕 </span>
+				<div className={styles.header}>
+					<span className={styles.logo}>📕 </span>
 					<h1 className={styles.title}>
-						<a
-							href="https://twitter.com/andrewli_ca"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<a href={TWITTER_URL} target="_blank" rel="noopener noreferrer">
 							andrew's
 						</a>{' '}
 						guestbook
@@ -53,7 +66,7 @@ export default function Home() {
 					<p className={styles.subtitle}>
 						on the{' '}
 						<a
-							href="https://rinkeby.etherscan.io/address/0x757E343598015cB7265eC8416f6F31FbD8932105"
+							href={`${ETHERSCAN_BASE_URL}/${CONTRACT_ADDRESS}`}
 							target="_blank"
 						>
 							Rinkeby Test Network
@@ -61,44 +74,39 @@ export default function Home() {
 					</p>
 				</div>
 
-				<div className={styles.description}>
-					<p>Leave a message for a chance to win free ETH!</p>
-					<Button>Connect wallet</Button>
+				<div className={styles.formWrapper}>
+					<p className={styles.description}>
+						Leave a message for a chance to win free ETH!
+					</p>
+
+					{currentAccount ? (
+						<form className={styles.form}>
+							<Textarea
+								name="message"
+								placeholder={'Enter your message'}
+								value={messageInput}
+								onChange={(e) => setMessageInput(e.target.value)}
+							/>
+
+							<div style={{ marginTop: '32px' }}>
+								<Button type="submit">Send message</Button>
+							</div>
+						</form>
+					) : (
+						<Button onClick={connectWallet}>Connect wallet</Button>
+					)}
 				</div>
 
-				<div className={styles.grid}>
+				<MessageGrid>
 					{data?.map(({ message, address, timestamp }) => (
-						<div className={styles.card}>
-							<p
-								style={{
-									fontSize: '18px',
-								}}
-							>
-								{message}
-							</p>
-							<p
-								style={{
-									fontSize: '14px',
-									whiteSpace: 'nowrap',
-									overflow: 'hidden',
-									textOverflow: 'ellipsis',
-								}}
-							>
-								{address}
-							</p>
-							<p
-								style={{
-									fontSize: '14px',
-									whiteSpace: 'nowrap',
-									overflow: 'hidden',
-									textOverflow: 'ellipsis',
-								}}
-							>
-								{format(parseISO(timestamp), 'Pp')}
-							</p>
-						</div>
+						<MessageGridItem
+							key={`${message}-${address}`}
+							message={message}
+							address={address}
+							timestamp={format(parseISO(timestamp), 'Pp')}
+						/>
 					))}
-				</div>
+				</MessageGrid>
 			</main>
 		</div>
 	);

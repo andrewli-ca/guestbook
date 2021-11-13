@@ -8,7 +8,7 @@ contract MessagePortal {
   struct Message {
     address visitor;
     string message;
-    uint256 timesetamp;
+    uint256 timestamp;
   }
 
   Message[] messages;

@@ -5,7 +5,6 @@
 .main {
 	max-width: 700px;
 	margin: auto;
-	min-height: 100vh;
 	padding: 4rem 0;
 	flex: 1;
 	display: flex;
@@ -40,7 +39,7 @@
 }
 
 .title a {
-	color: #0070f3;
+	color: #c5e478;
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -68,6 +67,9 @@
 
 .description {
 	margin: 4rem 0;
+}
+
+.description p {
 	line-height: 1.5;
 	font-size: 1.5rem;
 }

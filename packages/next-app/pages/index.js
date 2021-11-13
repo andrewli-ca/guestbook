@@ -1,6 +1,31 @@
+import { format, parseISO } from 'date-fns';
 import Head from 'next/head';
-import Image from 'next/image';
+import { Button } from '../components/Button';
 import styles from '../styles/Home.module.css';
+
+const data = [
+	{
+		address: '0xc39Cc76261F0d7AF60b70C4f3DFa9bC50B2bBa54',
+		timestamp: '2021-11-13T07:25:12.000Z',
+		message: 'Hello world',
+	},
+	{
+		address: '0xc39Cc76261F0d7AF60b70C4f3DFa9bC50B2bBa54',
+		timestamp: '2021-11-13T07:26:57.000Z',
+		message: 'Test',
+	},
+	{
+		address: '0xc39Cc76261F0d7AF60b70C4f3DFa9bC50B2bBa54',
+		timestamp: '2021-11-13T07:26:57.000Z',
+		message: 'Labore eiusmod reprehenderit sit ex sit elit ea.',
+	},
+	{
+		address: '0xc39Cc76261F0d7AF60b70C4f3DFa9bC50B2bBa54',
+		timestamp: '2021-11-13T07:26:57.000Z',
+		message:
+			'Elit mollit quis nostrud anim irure est laboris proident reprehenderit dolor amet et.',
+	},
+];
 
 export default function Home() {
 	return (
@@ -36,53 +61,45 @@ export default function Home() {
 					</p>
 				</div>
 
-				<p className={styles.description}>
-					Leave a message for a chance to win free ETH!
-				</p>
+				<div className={styles.description}>
+					<p>Leave a message for a chance to win free ETH!</p>
+					<Button>Connect wallet</Button>
+				</div>
 
 				<div className={styles.grid}>
-					<a href="https://nextjs.org/docs" className={styles.card}>
-						<h2>Documentation &rarr;</h2>
-						<p>Find in-depth information about Next.js features and API.</p>
-					</a>
-
-					<a href="https://nextjs.org/learn" className={styles.card}>
-						<h2>Learn &rarr;</h2>
-						<p>Learn about Next.js in an interactive course with quizzes!</p>
-					</a>
-
-					<a
-						href="https://github.com/vercel/next.js/tree/master/examples"
-						className={styles.card}
-					>
-						<h2>Examples &rarr;</h2>
-						<p>Discover and deploy boilerplate example Next.js projects.</p>
-					</a>
-
-					<a
-						href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-						className={styles.card}
-					>
-						<h2>Deploy &rarr;</h2>
-						<p>
-							Instantly deploy your Next.js site to a public URL with Vercel.
-						</p>
-					</a>
+					{data?.map(({ message, address, timestamp }) => (
+						<div className={styles.card}>
+							<p
+								style={{
+									fontSize: '18px',
+								}}
+							>
+								{message}
+							</p>
+							<p
+								style={{
+									fontSize: '14px',
+									whiteSpace: 'nowrap',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+								}}
+							>
+								{address}
+							</p>
+							<p
+								style={{
+									fontSize: '14px',
+									whiteSpace: 'nowrap',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+								}}
+							>
+								{format(parseISO(timestamp), 'Pp')}
+							</p>
+						</div>
+					))}
 				</div>
 			</main>
-
-			<footer className={styles.footer}>
-				<a
-					href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Powered by{' '}
-					<span className={styles.logo}>
-						<Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-					</span>
-				</a>
-			</footer>
 		</div>
 	);
 }

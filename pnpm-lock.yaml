@@ -30,6 +30,7 @@ importers:
 
   packages/next-app:
     specifiers:
+      date-fns: ^2.25.0
       eslint: 7.32.0
       eslint-config-next: 12.0.3
       eslint-config-prettier: ^8.3.0
@@ -39,6 +40,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
     dependencies:
+      date-fns: 2.25.0
       ethers: 5.5.1
       next: 12.0.3_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
@@ -2797,6 +2799,11 @@ packages:
   /data-uri-to-buffer/3.0.1:
     resolution: {integrity: sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==}
     engines: {node: '>= 6'}
+    dev: false
+
+  /date-fns/2.25.0:
+    resolution: {integrity: sha512-ovYRFnTrbGPD4nqaEqescPEv1mNwvt+UTqI3Ay9SzNtey9NZnYu6E2qCcBBgJ6/2VF1zGGygpyTDITqpQQ5e+w==}
+    engines: {node: '>=0.11'}
     dev: false
 
   /debug/2.6.9:

@@ -96,7 +96,7 @@ export default function Home() {
 							</div>
 						</form>
 					) : (
-						<Button onClick={connectWallet}>Connect wallet</Button>
+						<Button onClick={connectWallet}>Connect to MetaMask</Button>
 					)}
 				</div>
 

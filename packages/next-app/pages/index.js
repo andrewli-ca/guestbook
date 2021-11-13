@@ -43,7 +43,7 @@ export default function Home() {
 
 	useEffect(() => {
 		checkIfWalletIsConnected();
-	}, []);
+	}, [checkIfWalletIsConnected]);
 
 	return (
 		<div className={styles.container}>
@@ -60,7 +60,7 @@ export default function Home() {
 					</span>
 					<h1 className={styles.title}>
 						<a href={TWITTER_URL} target="_blank" rel="noopener noreferrer">
-							andrew's
+							andrew&apos;s
 						</a>{' '}
 						guestbook
 					</h1>
@@ -70,6 +70,7 @@ export default function Home() {
 						<a
 							href={`${ETHERSCAN_BASE_URL}/${CONTRACT_ADDRESS}`}
 							target="_blank"
+							rel="noreferrer"
 						>
 							Rinkeby Test Network
 						</a>

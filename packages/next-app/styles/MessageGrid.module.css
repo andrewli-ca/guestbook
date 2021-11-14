@@ -23,6 +23,7 @@
 	margin: 0;
 	padding-bottom: 16px;
 	font-size: 18px;
+	overflow-wrap: break-word;
 }
 
 .address {

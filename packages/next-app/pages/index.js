@@ -10,7 +10,7 @@ import {
 	ETHERSCAN_BASE_URL,
 	TWITTER_URL,
 } from '../utils/constants.js';
-import { getAllMessages, sendMessage } from '../utils/contract';
+import { getAllMessages, getContract, sendMessage } from '../utils/contract';
 import { useAsync } from '../utils/hooks';
 import { useWallet } from '../utils/wallet';
 
@@ -24,9 +24,48 @@ export default function Home() {
 
 	useEffect(() => {
 		checkIfWalletIsConnected()
-			.then(getAllMessages)
+			.then((wallet) => {
+				if (wallet) {
+					return getAllMessages();
+				}
+			})
 			.then((results) => setAllMessages(results));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentAccount]);
+
+	useEffect(() => {
+		let contract;
+
+		// Listener
+		function onNewMessage(from, timestamp, message) {
+			// Add new message to the existing messages
+			setAllMessages((prevState) => [
+				...prevState,
+				{
+					address: from,
+					timestamp,
+					message: message,
+				},
+			]);
+		}
+
+		async function effect() {
+			contract = await getContract();
+
+			if (contract) {
+				// Subscribe to new message event
+				contract.on('NewMessage', onNewMessage);
+			}
+		}
+
+		effect();
+
+		return () => {
+			if (contract) {
+				// Unsubscribe listener
+				contract.off('NewMessage', onNewMessage);
+			}
+		};
 	}, []);
 
 	function handleSubmit(e) {
@@ -88,7 +127,9 @@ export default function Home() {
 							</div>
 						</form>
 					) : (
-						<Button onClick={connectWallet}>Connect to MetaMask</Button>
+						<div style={{ marginTop: '36px' }}>
+							<Button onClick={connectWallet}>Connect to MetaMask</Button>
+						</div>
 					)}
 				</div>
 

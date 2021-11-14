@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-function Textarea({ name, value, onChange, placeholder }) {
+function Textarea({ name, value, onChange, placeholder, ...props }) {
 	return (
 		<Fragment>
 			<textarea
@@ -10,6 +10,7 @@ function Textarea({ name, value, onChange, placeholder }) {
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
+				{...props}
 			/>
 			<div style={{ fontSize: '14px', marginTop: '16px', color: '#989898' }}>
 				<span style={value.length > 140 ? { color: 'red' } : {}}>

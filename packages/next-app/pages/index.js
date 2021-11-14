@@ -140,12 +140,14 @@ export default function Home() {
 						Leave a message, get free ETH!{' '}
 						<span aria-label="smiling with sunglasses emoji">😎</span>{' '}
 					</p>
+
 					{currentAccount ? (
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<Textarea
 								name="message"
 								placeholder={'Enter your message'}
 								value={messageInput}
+								disabled={isLoading}
 								onChange={(e) => {
 									// The first key entered after an error will reset the error so the message dissapears.
 									if (error) {

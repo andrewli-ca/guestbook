@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import Head from 'next/head';
+import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { Button } from '../components/Button';
 import { MessageGrid, MessageGridItem } from '../components/MessageGrid';
@@ -74,7 +75,15 @@ export default function Home() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		return run(sendMessage(messageInput)).then(() => setMessageInput(''));
+		return run(sendMessage(messageInput)).then((result) => {
+			if (result) {
+				confetti({
+					particleCount: 150,
+					spread: 180,
+				});
+				setMessageInput('');
+			}
+		});
 	}
 
 	return (
@@ -86,6 +95,17 @@ export default function Home() {
 			</Head>
 
 			<main className={styles.main}>
+				<Script
+					src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"
+					onLoad={() => {
+						let myCanvas = document.createElement('canvas');
+						document.body.appendChild(myCanvas);
+						confetti.create(myCanvas, {
+							resize: true,
+							useWorker: true,
+						});
+					}}
+				/>
 				<div className={styles.header}>
 					<span className={styles.logo} aria-label="red book emoji">
 						📕

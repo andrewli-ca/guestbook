@@ -16,7 +16,7 @@ import { useAsync } from '../utils/hooks';
 import { useWallet } from '../utils/wallet';
 
 export default function Home() {
-	const { run, data, isLoading } = useAsync();
+	const { run, data, error, setError, isLoading } = useAsync();
 	const { currentAccount, checkIfWalletIsConnected, connectWallet } =
 		useWallet();
 
@@ -75,15 +75,17 @@ export default function Home() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		return run(sendMessage(messageInput)).then((result) => {
-			if (result) {
-				confetti({
-					particleCount: 150,
-					spread: 180,
-				});
-				setMessageInput('');
-			}
-		});
+		return run(sendMessage(messageInput))
+			.then((result) => {
+				if (result) {
+					confetti({
+						particleCount: 150,
+						spread: 180,
+					});
+					setMessageInput('');
+				}
+			})
+			.catch((e) => {});
 	}
 
 	return (
@@ -141,7 +143,14 @@ export default function Home() {
 								name="message"
 								placeholder={'Enter your message'}
 								value={messageInput}
-								onChange={(e) => setMessageInput(e.target.value)}
+								onChange={(e) => {
+									// The first key entered after an error will reset the error so the message dissapears.
+									if (error) {
+										setError(null);
+									}
+
+									setMessageInput(e.target.value);
+								}}
 							/>
 
 							<div style={{ marginTop: '32px' }}>
@@ -160,12 +169,18 @@ export default function Home() {
 						</div>
 					)}
 
-					{data && messageInput.length > 1 ? (
+					{data && !messageInput.length ? (
 						<p
 							style={{ marginTop: '24px', fontSize: '14px', color: '#82AAFF' }}
 						>
 							Thanks for the kind message. 0.001 ETH has been sent to your
 							wallet.
+						</p>
+					) : null}
+
+					{error && messageInput.length ? (
+						<p style={{ marginTop: '24px', fontSize: '14px', color: 'red' }}>
+							Error: Unable to complete transaction.
 						</p>
 					) : null}
 				</div>

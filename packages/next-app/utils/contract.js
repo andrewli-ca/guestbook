@@ -25,6 +25,9 @@ async function sendMessage(message) {
 		return messageTxn;
 	} catch (e) {
 		console.log(e);
+
+		// Throw this error so the useAsync hook can catch it and see the status to error.
+		throw e;
 	}
 }
 

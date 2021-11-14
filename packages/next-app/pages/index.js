@@ -29,7 +29,11 @@ export default function Home() {
 					return getAllMessages();
 				}
 			})
-			.then((results) => setAllMessages(results));
+			.then((results) => {
+				const sortByLatest = results.slice().reverse();
+
+				setAllMessages(sortByLatest);
+			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentAccount]);
 
@@ -40,12 +44,12 @@ export default function Home() {
 		function onNewMessage(from, timestamp, message) {
 			// Add new message to the existing messages
 			setAllMessages((prevState) => [
-				...prevState,
 				{
 					address: from,
 					timestamp,
 					message: message,
 				},
+				...prevState,
 			]);
 		}
 

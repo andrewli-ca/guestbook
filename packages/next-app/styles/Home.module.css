@@ -2,6 +2,12 @@
 	padding: 0 2rem;
 }
 
+.header {
+	max-width: 700px;
+	margin: auto;
+	text-align: right;
+}
+
 .main {
 	max-width: 700px;
 	margin: auto;
@@ -13,7 +19,7 @@
 	align-items: center;
 }
 
-.header {
+.heading {
 	max-width: 480px;
 	text-align: center;
 }
@@ -22,16 +28,8 @@
 	font-size: 4rem;
 }
 
-.title a {
+.title span {
 	color: #c5e478;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-	text-decoration: underline;
 }
 
 .title {

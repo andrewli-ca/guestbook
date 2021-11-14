@@ -100,6 +100,20 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
+			<div className={styles.header}>
+				<a href={TWITTER_URL} target="_blank" rel="noreferrer">
+					Twitter
+				</a>
+				<span style={{ margin: '0 12px' }}></span>
+				<a
+					href="https://github.com/andrewli-ca/guestbook"
+					target="_blank"
+					rel="noreferrer"
+				>
+					GitHub
+				</a>
+			</div>
+
 			<main className={styles.main}>
 				<Script
 					src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"
@@ -112,14 +126,15 @@ export default function Home() {
 						});
 					}}
 				/>
-				<div className={styles.header}>
+
+				<div className={styles.heading}>
 					<span className={styles.logo} aria-label="red book emoji">
 						📕
 					</span>
 					<h1 className={styles.title}>
-						<a href={TWITTER_URL} target="_blank" rel="noopener noreferrer">
+						<span href={TWITTER_URL} target="_blank" rel="noopener noreferrer">
 							andrew&apos;s
-						</a>{' '}
+						</span>{' '}
 						guestbook
 					</h1>
 

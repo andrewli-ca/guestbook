@@ -16,11 +16,13 @@ async function sendMessage(message) {
 	try {
 		const contract = await getContract();
 
-		const messageTxn = await contract.send(message);
+		const messageTxn = await contract.send(message, { gasLimit: 300000 });
 		console.log('Mining...', messageTxn.hash);
 
 		await messageTxn.wait();
 		console.log('Mined -- ', messageTxn.hash);
+
+		return messageTxn;
 	} catch (e) {
 		console.log(e);
 	}

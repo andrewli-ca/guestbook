@@ -1,49 +1,38 @@
+import { format } from 'date-fns';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { Button } from '../components/Button';
 import { MessageGrid, MessageGridItem } from '../components/MessageGrid';
 import { Textarea } from '../components/Textarea';
 import styles from '../styles/Home.module.css';
+import {
+	CONTRACT_ADDRESS,
+	ETHERSCAN_BASE_URL,
+	TWITTER_URL,
+} from '../utils/constants.js';
+import { getAllMessages, sendMessage } from '../utils/contract';
+import { useAsync } from '../utils/hooks';
 import { useWallet } from '../utils/wallet';
-import { format, parseISO } from 'date-fns';
-
-const TWITTER_URL = 'https://twitter.com/andrewli_ca';
-const ETHERSCAN_BASE_URL = 'https://rinkeby.etherscan.io/address';
-const CONTRACT_ADDRESS = '0x757E343598015cB7265eC8416f6F31FbD8932105';
-
-const data = [
-	{
-		address: '0xc39Cc76261F0d7AF60b70C4f3DFa9bC50B2bBa54',
-		timestamp: '2021-11-13T07:25:12.000Z',
-		message: 'Hello world',
-	},
-	{
-		address: '0xc39Cc76261F0d7AF60b70C4f3DFa9bC50B2bBa54',
-		timestamp: '2021-11-13T07:26:57.000Z',
-		message: 'Test',
-	},
-	{
-		address: '0xc39Cc76261F0d7AF60b70C4f3DFa9bC50B2bBa54',
-		timestamp: '2021-11-13T07:26:57.000Z',
-		message: 'Labore eiusmod reprehenderit sit ex sit elit ea.',
-	},
-	{
-		address: '0xc39Cc76261F0d7AF60b70C4f3DFa9bC50B2bBa54',
-		timestamp: '2021-11-13T07:26:57.000Z',
-		message:
-			'Elit mollit quis nostrud anim irure est laboris proident reprehenderit dolor amet et.',
-	},
-];
 
 export default function Home() {
+	const { run, isLoading } = useAsync();
 	const { currentAccount, checkIfWalletIsConnected, connectWallet } =
 		useWallet();
 
 	const [messageInput, setMessageInput] = useState('');
+	const [allMessages, setAllMessages] = useState([]);
 
 	useEffect(() => {
-		checkIfWalletIsConnected();
-	}, [checkIfWalletIsConnected]);
+		checkIfWalletIsConnected()
+			.then(getAllMessages)
+			.then((results) => setAllMessages(results));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		return run(sendMessage(messageInput)).then(() => setMessageInput(''));
+	}
 
 	return (
 		<div className={styles.container}>
@@ -84,7 +73,7 @@ export default function Home() {
 					</p>
 
 					{currentAccount ? (
-						<form className={styles.form}>
+						<form className={styles.form} onSubmit={handleSubmit}>
 							<Textarea
 								name="message"
 								placeholder={'Enter your message'}
@@ -93,7 +82,9 @@ export default function Home() {
 							/>
 
 							<div style={{ marginTop: '32px' }}>
-								<Button type="submit">Send message</Button>
+								<Button type="submit" isLoading={isLoading}>
+									Send message
+								</Button>
 							</div>
 						</form>
 					) : (
@@ -102,12 +93,12 @@ export default function Home() {
 				</div>
 
 				<MessageGrid>
-					{data?.map(({ message, address, timestamp }) => (
+					{allMessages?.map((message, index) => (
 						<MessageGridItem
-							key={`${message}-${address}`}
-							message={message}
-							address={address}
-							timestamp={format(parseISO(timestamp), 'Pp')}
+							key={index}
+							message={message.message}
+							address={message.visitor}
+							timestamp={format(new Date(message.timestamp * 1000), 'Pp')}
 						/>
 					))}
 				</MessageGrid>

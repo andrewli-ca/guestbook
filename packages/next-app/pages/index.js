@@ -31,6 +31,10 @@ export default function Home() {
 				}
 			})
 			.then((results) => {
+				if (!results) {
+					return;
+				}
+
 				const sortByLatest = results.slice().reverse();
 
 				setAllMessages(sortByLatest);
@@ -136,7 +140,6 @@ export default function Home() {
 						Leave a message, get free ETH!{' '}
 						<span aria-label="smiling with sunglasses emoji">😎</span>{' '}
 					</p>
-
 					{currentAccount ? (
 						<form className={styles.form} onSubmit={handleSubmit}>
 							<Textarea
@@ -169,20 +172,48 @@ export default function Home() {
 						</div>
 					)}
 
-					{data && !messageInput.length ? (
-						<p
-							style={{ marginTop: '24px', fontSize: '14px', color: '#82AAFF' }}
-						>
-							Thanks for the kind message. 0.001 ETH has been sent to your
-							wallet.
-						</p>
-					) : null}
+					<div style={{ marginTop: '24px' }}>
+						{/* Message sent successfully */}
+						{data && !messageInput.length ? (
+							<p
+								style={{
+									marginTop: '24px',
+									fontSize: '14px',
+									color: '#82AAFF',
+								}}
+							>
+								Thanks for the kind message.{' '}
+								<a
+									href={`https://rinkeby.etherscan.io/tx/${data.hash}`}
+									target="_blank"
+									rel="noreferrer"
+								>
+									0.001 ETH
+								</a>{' '}
+								has been sent to your wallet.
+							</p>
+						) : null}
 
-					{error && messageInput.length ? (
-						<p style={{ marginTop: '24px', fontSize: '14px', color: 'red' }}>
-							Error: Unable to complete transaction.
-						</p>
-					) : null}
+						{/* MetaMask errors */}
+						{error?.code && !error.transactionHash && messageInput.length ? (
+							<p className={styles.error}>{error.message}</p>
+						) : null}
+
+						{/* Transaction error */}
+						{error?.transactionHash && messageInput.length ? (
+							<p className={styles.error}>
+								Error: Unable to complete transaction. View details on{' '}
+								<a
+									href={`https://rinkeby.etherscan.io/tx/${error.transactionHash}`}
+									target="_blank"
+									rel="noreferrer"
+								>
+									Etherscan
+								</a>
+								.
+							</p>
+						) : null}
+					</div>
 				</div>
 
 				<MessageGrid>

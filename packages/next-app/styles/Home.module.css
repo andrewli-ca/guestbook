@@ -67,6 +67,11 @@
 	margin: 0 auto;
 }
 
+.error {
+	font-size: 14px;
+	color: red;
+}
+
 @media (max-width: 600px) {
 	.container {
 		padding: 0;

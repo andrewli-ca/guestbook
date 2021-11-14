@@ -49,4 +49,4 @@ async function getContract() {
 	}
 }
 
-export { getAllMessages, sendMessage };
+export { getAllMessages, sendMessage, getContract };

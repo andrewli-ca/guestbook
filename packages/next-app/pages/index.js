@@ -124,7 +124,7 @@ export default function Home() {
 								<Button
 									type="submit"
 									isLoading={isLoading}
-									disabled={!messageInput}
+									disabled={!messageInput || messageInput.length > 140}
 								>
 									Send message
 								</Button>

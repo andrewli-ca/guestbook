@@ -44,14 +44,18 @@ export default function Home() {
 		// Listener
 		function onNewMessage(from, timestamp, message) {
 			// Add new message to the existing messages
-			setAllMessages((prevState) => [
-				{
-					address: from,
-					timestamp,
-					message: message,
-				},
-				...prevState,
-			]);
+			setAllMessages((prevState) =>
+				[
+					...prevState,
+					{
+						address: from,
+						timestamp,
+						message: message,
+					},
+				]
+					.slice()
+					.reverse(),
+			);
 		}
 
 		async function effect() {

@@ -121,7 +121,11 @@ export default function Home() {
 							/>
 
 							<div style={{ marginTop: '32px' }}>
-								<Button type="submit" isLoading={isLoading}>
+								<Button
+									type="submit"
+									isLoading={isLoading}
+									disabled={!messageInput}
+								>
 									Send message
 								</Button>
 							</div>

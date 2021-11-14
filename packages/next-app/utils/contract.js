@@ -1,6 +1,5 @@
 import { ethers } from 'ethers';
 import MessagePortalAbi from './MessagePortal.json';
-import { CONTRACT_ADDRESS } from './constants.js';
 
 async function getAllMessages() {
 	try {
@@ -48,7 +47,11 @@ async function getContract() {
 		const provider = new ethers.providers.Web3Provider(ethereum);
 		const signer = provider.getSigner();
 
-		return new ethers.Contract(CONTRACT_ADDRESS, contractABI, signer);
+		return new ethers.Contract(
+			process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+			contractABI,
+			signer,
+		);
 	} catch (e) {
 		console.log(e);
 	}

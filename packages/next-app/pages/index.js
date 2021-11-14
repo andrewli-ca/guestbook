@@ -6,11 +6,7 @@ import { Button } from '../components/Button';
 import { MessageGrid, MessageGridItem } from '../components/MessageGrid';
 import { Textarea } from '../components/Textarea';
 import styles from '../styles/Home.module.css';
-import {
-	CONTRACT_ADDRESS,
-	ETHERSCAN_BASE_URL,
-	TWITTER_URL,
-} from '../utils/constants.js';
+import { ETHERSCAN_BASE_URL, TWITTER_URL } from '../utils/constants.js';
 import { getAllMessages, getContract, sendMessage } from '../utils/contract';
 import { useAsync } from '../utils/hooks';
 import { useWallet } from '../utils/wallet';
@@ -126,7 +122,7 @@ export default function Home() {
 					<p className={styles.subtitle}>
 						on the{' '}
 						<a
-							href={`${ETHERSCAN_BASE_URL}/${CONTRACT_ADDRESS}`}
+							href={`${ETHERSCAN_BASE_URL}/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`}
 							target="_blank"
 							rel="noreferrer"
 						>

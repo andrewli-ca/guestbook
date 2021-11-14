@@ -21,6 +21,8 @@ function useWallet() {
 			}
 
 			setCurrentAccount(accounts[0]);
+
+			return accounts[0];
 		} catch (error) {
 			console.log(error);
 		}

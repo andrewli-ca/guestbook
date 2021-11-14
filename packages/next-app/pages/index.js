@@ -12,7 +12,7 @@ import { useAsync } from '../utils/hooks';
 import { useWallet } from '../utils/wallet';
 
 export default function Home() {
-	const { run, data, error, setError, isLoading } = useAsync();
+	const { run, data, error, setError, setData, isLoading } = useAsync();
 	const { currentAccount, checkIfWalletIsConnected, connectWallet } =
 		useWallet();
 
@@ -152,6 +152,11 @@ export default function Home() {
 									// The first key entered after an error will reset the error so the message dissapears.
 									if (error) {
 										setError(null);
+									}
+
+									// Do the same for the success message.
+									if (data) {
+										setData(null);
 									}
 
 									setMessageInput(e.target.value);

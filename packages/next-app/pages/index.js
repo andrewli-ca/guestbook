@@ -16,7 +16,7 @@ import { useAsync } from '../utils/hooks';
 import { useWallet } from '../utils/wallet';
 
 export default function Home() {
-	const { run, isLoading } = useAsync();
+	const { run, data, isLoading } = useAsync();
 	const { currentAccount, checkIfWalletIsConnected, connectWallet } =
 		useWallet();
 
@@ -131,7 +131,7 @@ export default function Home() {
 
 				<div className={styles.formWrapper}>
 					<p className={styles.description}>
-						Leave a message, win free ETH!{' '}
+						Leave a message, get free ETH!{' '}
 						<span aria-label="smiling with sunglasses emoji">😎</span>{' '}
 					</p>
 
@@ -159,6 +159,15 @@ export default function Home() {
 							<Button onClick={connectWallet}>Connect to MetaMask</Button>
 						</div>
 					)}
+
+					{data && messageInput.length > 1 ? (
+						<p
+							style={{ marginTop: '24px', fontSize: '14px', color: '#82AAFF' }}
+						>
+							Thanks for the kind message. 0.001 ETH has been sent to your
+							wallet.
+						</p>
+					) : null}
 				</div>
 
 				<MessageGrid>

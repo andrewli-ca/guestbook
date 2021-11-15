@@ -59,7 +59,7 @@ Copy the `.env.example` file located in `packages/next-app` to `.env.local`. Pas
 
 In addition for the App to interact with the contract, it needs an artifact file. Head to `packages/hardhat/artifacts/contracts/MessagePortal.json`. Copy this file over to `packages/next-app/utils/MessagePortal.json`.
 
-Note each time the contract has been modified and is deployed, a new artifact file is generated and will need to be copied over to the `next-app` package folder.
+Note that for each time the contract is modified and deployed, a new artifact file is generated and will need to be copied over again.
 
 Now we are ready to run the app. Open a new window and cd to `packages/next-app`. Start the Next.js server.
 

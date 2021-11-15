@@ -4,11 +4,11 @@ Guestbook is a site that allows users to send messages and receive some free ETH
 
 This project was created to learn how to write and deploy smart contracts with Solidity. It is based on the _Build a Web3 App With Solidity + Ethereum Smart Contracts_ course from [@\_buildspace](https://twitter.com/_buildspace). This short course is a great way to start learning how to develop smart contracts and I would recommend it to any Web3 newcomers.
 
-![Demo animated gif](https://guestbook-b5l8idhbw-andrewli-ca.vercel.app/screenshot.gif)
+![Demo animated gif](https://guestbook-five.vercel.app/screenshot.gif)
 
 ## 🖥 Demo
 
-[Link](https://guestbook-b5l8idhbw-andrewli-ca.vercel.app/)
+[Link](https://guestbook-five.vercel.app/)
 
 ## 🛠 Requirements
 
